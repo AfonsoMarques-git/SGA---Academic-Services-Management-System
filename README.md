@@ -1,261 +1,302 @@
-# Sistema de Gestão de Serviços Académicos (SGA)
+# SGA - Academic Services Management System
 
-Um sistema web completo para gerenciar processos de ensino superior, incluindo autenticação, gestão de cursos, fichas de aluno, pedidos de matrícula e pautas.
+A comprehensive web-based academic management system built with PHP MVC architecture. Designed for higher education institutions to manage student records, courses, enrollment requests, grade sheets, and faculty operations.
+
+## 📋 Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Quick Start](#quick-start)
+- [User Roles](#user-roles)
+- [Security Features](#security-features)
+- [Contributing](#contributing)
+
+## ✨ Features
+
+### Core Functionality
+- **Student Record Management** - Create, update, and validate student enrollment records
+- **Course Management** - Organize courses and course units with hierarchical structure
+- **Grade Management** - Record and manage student grades and performance metrics
+- **Enrollment Requests** - Handle and process student enrollment applications
+- **User Management** - Multi-role access control (Student, Staff, Manager)
+- **Reporting** - Generate academic reports and data exports
+- **Multi-language Support** - Interface available in Portuguese and English
+
+### Dashboard Features
+- **Students** - View personal records, course enrollment, and grades
+- **Staff** - Access grade sheets, manage student evaluations
+- **Managers** - System overview with statistics, full administrative control
+
+## 🛠 Tech Stack
+
+- **Backend**: PHP 7.4+
+- **Database**: MySQL/MariaDB
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Architecture**: MVC (Model-View-Controller)
+- **Server**: XAMPP (Apache, PHP, MySQL)
+- **Database Access**: PDO with prepared statements
+
+## 📁 Project Structure
+
+```
+SGA-Academic-Services-Management-System/
+├── config/                          # Application configuration
+│   ├── app.php                     # App constants
+│   └── database.php                # Database connection (PDO)
+├── core/                           # Core framework
+│   ├── bootstrap.php               # Application initialization
+│   ├── helpers.php                 # Global helper functions
+│   ├── i18n.php                    # Internationalization
+│   ├── Router.php                  # URL routing system
+│   └── session.php                 # Session management
+├── controllers/                    # Application logic
+│   ├── ManagerCoursesController.php
+│   ├── ManagerUnitsController.php
+│   ├── ManagerUsersController.php
+│   ├── ManagerReportsController.php
+│   ├── StudentRecordController.php
+│   ├── StaffGradesController.php
+│   └── EnrollmentRequestsController.php
+├── models/                         # Data layer
+│   ├── User.php                    # User model
+│   ├── Course.php                  # Course model
+│   ├── CourseUnit.php              # Course unit model
+│   ├── Aluno.php                   # Student/record model
+│   ├── GradeSheet.php              # Grade sheet model
+│   ├── StudentRecord.php           # Student record model
+│   ├── EnrollmentRequest.php       # Enrollment request model
+│   └── RequestMessage.php          # Message model
+├── views/                          # Presentation layer
+│   ├── auth/                       # Authentication views
+│   ├── layouts/                    # Base layouts and navbar
+│   ├── manager/                    # Manager dashboard & forms
+│   ├── student/                    # Student views
+│   ├── staff/                      # Staff views
+│   ├── messages/                   # Message views
+│   └── shared/                     # Shared components
+├── public/                         # Web root (server-accessible)
+│   ├── index.php                   # Entry point
+│   ├── login.php                   # Login page
+│   ├── logout.php                  # Logout handler
+│   ├── dashboard.php               # Dashboard router
+│   ├── assets/                     # CSS, JS, images
+│   ├── manager/                    # Manager pages
+│   ├── staff/                      # Staff pages
+│   ├── student/                    # Student pages
+│   └── uploads/                    # User uploads (photos)
+├── routes/                         # Route definitions
+│   └── web.php                     # Application routes
+├── sql/                            # Database scripts
+│   ├── schema.sql                  # Database schema
+│   ├── seeds.sql                   # Initial test data
+│   ├── criar-grupos.sql            # Group creation
+│   └── reset-passwords.sql         # Password reset
+├── translations/                   # Language files
+│   ├── en.php                      # English translations
+│   └── pt.php                      # Portuguese translations
+└── index.php                       # Root entry point
+```
 
 ## 🚀 Quick Start
 
-### 1. Configurar Base de Dados
+### Prerequisites
+- XAMPP (Apache, PHP 7.4+, MySQL)
+- Git
 
-Abra phpMyAdmin e:
+### Installation
 
-```sql
-1. Crie uma nova base de dados: aulasphp
-2. Selecione a base de dados
-3. Vá para a aba "SQL"
-4. Cole o conteúdo do ficheiro: /sql/schema.sql
-5. Execute
-6. Depois cole o conteúdo de: /sql/seeds.sql e execute
-```
-
-Ou via terminal MySQL:
+1. **Clone Repository**
 ```bash
-mysql -u root < /sql/schema.sql
-mysql -u root aulasphp < /sql/seeds.sql
+git clone <repository-url>
+cd SGA-Academic-Services-Management-System
 ```
 
-### 2. Aceder à Aplicação
+2. **Configure Database**
 
-Abra o navegador:
-```
-http://localhost/Aulas%20PHP/Aula1/public/login.php
-```
+Using phpMyAdmin:
+1. Create a new database: `aulasphp`
+2. Select the database
+3. Go to the "SQL" tab
+4. Paste contents from `/sql/schema.sql`
+5. Execute
+6. Paste contents from `/sql/seeds.sql` and execute
 
-### 3. Utilizadores de Teste
-
-| Utilizador | Password | Perfil |
-|------------|----------|--------|
-| joao_silva | password123 | Aluno |
-| maria_santos | password123 | Aluno |
-| carlos_funcionario | password123 | Funcionário |
-| ana_gestor | password123 | Gestor Pedagógico |
-
-## 📁 Estrutura do Projeto
-
-```
-/project
-│
-├── /config              # Configurações
-│   ├── database.php    # Conexão PDO
-│   └── app.php         # Constantes da app
-│
-├── /core               # Núcleo
-│   ├── bootstrap.php   # Inicialização
-│   ├── helpers.php     # Funções úteis
-│   ├── session.php     # Sessões
-│   └── middleware.php  # Middlewares
-│
-├── /models             # Modelos (Dados)
-│   ├── User.php
-│   ├── StudentRecord.php
-│   ├── Course.php
-│   ├── CourseUnit.php
-│   ├── EnrollmentRequest.php
-│   └── GradeSheet.php
-│
-├── /controllers        # Controllers (Lógica) - A implementar
-│
-├── /views              # Views (HTML)
-│   ├── /layouts        # Layouts base
-│   ├── /auth           # Autenticação
-│   ├── /student        # Vistas do Aluno
-│   ├── /staff          # Vistas do Funcionário
-│   ├── /manager        # Vistas do Gestor
-│   └── /shared         # Vistas partilhadas
-│
-├── /public             # Arquivos públicos
-│   ├── index.php       # Redireção para dashboard
-│   ├── login.php       # Login
-│   ├── logout.php      # Logout
-│   ├── dashboard.php   # Dashboard roteado
-│   └── /uploads        # Upload de ficheiros (fotos)
-│
-├── /sql                # Scripts SQL
-│   ├── schema.sql      # Esquema BD
-│   └── seeds.sql       # Dados de teste
-│
-└── /routes             # Roteamento - A implementar
+Or via MySQL terminal:
+```bash
+mysql -u root < sql/schema.sql
+mysql -u root aulasphp < sql/seeds.sql
 ```
 
-## 🔐 Segurança Implementada
+3. **Update Configuration**
 
-- ✅ Autenticação com password_hash (bcrypt)
-- ✅ PDO com prepared statements (prevenção SQL injection)
-- ✅ Sessões com timeout
-- ✅ Middleware de controlo de acesso por perfil
-- ✅ CSRF token (a adicionar em formulários)
-- ✅ Validação de entrada e output escaping
+Edit `config/database.php` if using different credentials:
+```php
+'host' => 'localhost',
+'user' => 'root',
+'password' => '',
+'database' => 'aulasphp'
+```
 
-## 📋 Funcionalidades Implementadas
+4. **Access Application**
 
-### Fase 1: Arquitetura ✅
-- ✅ Estrutura de pastas profissional
-- ✅ Configuração centralizadada
-- ✅ Bootstrap de inicialização
-- ✅ Helpers e funções úteis
-- ✅ Session management
+Open your browser:
+```
+http://localhost/SGA---Academic-Services-Management-System/public/login.php
+```
 
-### Fase 2: Base de Dados ✅
-- ✅ Schema completo com 11 tabelas
-- ✅ Relacionamentos e constraints
-- ✅ Views úteis
-- ✅ Dados de teste (seeds)
+### Test Credentials
 
-### Fase 3: Autenticação ✅
-- ✅ Login seguro com password_hash
-- ✅ Sessões
-- ✅ Logout
-- ✅ Middleware por perfil
+| Username | Password | Role |
+|----------|----------|------|
+| joao_silva | password123 | Student |
+| maria_santos | password123 | Student |
+| carlos_funcionario | password123 | Staff |
+| ana_gestor | password123 | Manager |
 
-### Fase 4: Dashboards ✅
-- ✅ Dashboard do Aluno
-- ✅ Dashboard do Funcionário
-- ✅ Dashboard do Gestor Pedagógico
-- ✅ Roteamento por perfil
+## 👥 User Roles
 
-## 📝 Próximas Fases a Implementar
+### Student (Aluno)
+- View and edit personal enrollment record
+- Browse available courses
+- Submit records for validation
+- View grades and transcripts
+- Check enrollment status
 
-### Fase 5: Ficha de Aluno
-- [ ] Formulário de criação/edição
-- [ ] Upload de foto (validação)
-- [ ] Submissão
-- [ ] Validação pelo Gestor
+### Staff (Funcionário)
+- Access grade sheets and manage evaluations
+- Record student grades and scores
+- View student records
+- Generate simple reports
+- Manage course evaluations
 
-### Fase 6: Pedidos de Matrícula
-- [ ] Criação de pedido
-- [ ] Aprovação/Rejeição pelo Funcionário
-- [ ] Auditoria
+### Manager (Gestor Pedagógico)
+- Full course and course unit management
+- User account management and permissions
+- Validate student records
+- Create and modify study plans
+- Generate comprehensive academic reports
+- Export data to CSV format
+- System overview and analytics
 
-### Fase 7: Gestão Académica
-- [ ] CRUD Cursos
-- [ ] CRUD UCs
-- [ ] Plano de Estudos
+## 🔐 Security Features
 
-### Fase 8: Pautas e Notas
-- [ ] Criação de pautas
-- [ ] Lançamento de notas
-- [ ] Publicação
+- ✅ **Password Security** - bcrypt hashing via `password_hash()`
+- ✅ **SQL Injection Prevention** - PDO prepared statements throughout
+- ✅ **Session Security** - Timeout and secure session handling
+- ✅ **Access Control** - Role-based middleware authorization
+- ✅ **Input Validation** - Server-side validation for all inputs
+- ✅ **Output Escaping** - HTML escaping for XSS prevention
+- ✅ **CSRF Protection** - Token-based CSRF prevention
 
-### Fase 9: Auditoria e Logs
-- [ ] Logs de ações
-- [ ] Histórico de eventos
-- [ ] Relatórios
+## 📝 Development Roadmap
 
-### Fase 10: Interface Final
-- [ ] Melhorias visuais
-- [ ] Validações client-side
-- [ ] Tratamento de erros
+### Completed Phases
+- ✅ Project architecture and folder structure
+- ✅ Centralized configuration setup
+- ✅ Database schema with 11 tables and relationships
+- ✅ Secure authentication system (bcrypt passwords)
+- ✅ Session management and role-based middleware
+- ✅ Multi-role dashboards (Student, Staff, Manager)
 
-## 🔗 Endpoints (A Completar)
+### Upcoming Phases
+1. **Student Record Forms** - Creation, editing, photo upload
+2. **Enrollment Requests** - Request processing and approval workflow
+3. **Academic Management** - Full CRUD for courses and course units
+4. **Grade Management** - Grade sheets and grade recording
+5. **System Auditing** - Comprehensive logs and audit trails
+6. **UI/UX Improvements** - Enhanced visual design and user experience
 
-### Públicos
-- POST /login.php - Autenticação
-- GET /logout.php - Logout
+## 🗄️ Database
 
-### Aluno
-- GET /student/dashboard.php - Dashboard
-- GET /student/record.php - Minha ficha
-- POST /student/record.php - Salvar ficha
-- GET /student/enrollments.php - Meus pedidos
-- POST /student/new-enrollment.php - Novo pedido
+### Schema Overview
+The system includes 11 tables:
+- **users** - System user accounts with roles
+- **alunos** - Student profiles and records
+- **cursos** - Academic courses
+- **course_units** - Course curriculum units
+- **enrollments** - Student enrollment applications
+- **grade_sheets** - Grade evaluation records
+- **grades** - Individual grade entries
+- **messages** - System notification messaging
+- And supporting relationship tables
 
-### Gestor Pedagógico
-- GET /manager/dashboard.php - Dashboard
-- GET /manager/courses.php - Gerir cursos
-- GET /manager/units.php - Gerir UCs
-- GET /manager/study-plan.php - Plano de estudos
-- GET /manager/record.php?id=X - Ver ficha
-- POST /manager/record.php - Aprovar/Rejeitar ficha
+### Initial Setup
+Default test data includes:
+- 4 pre-configured user accounts with different roles
+- Sample courses and course units
+- Example student records
 
-### Funcionário
-- GET /staff/dashboard.php - Dashboard
-- GET /staff/enrollment.php?id=X - Ver pedido
-- POST /staff/enrollment.php - Aprovar/Rejeitar
-- GET /staff/grade-sheets.php - Pautas
-- GET /staff/grade.php?id=X - Editar pauta
+## 🧪 Configuration
 
-## 🧪 Testes
+Edit `config/database.php` to customize database connection:
+```php
+<?php
+return [
+    'host' => 'localhost',
+    'user' => 'root',
+    'password' => '',
+    'database' => 'aulasphp',
+    'port' => 3306
+];
+```
 
-Para testar a aplicação completamente:
+Edit `config/app.php` for application settings:
+```php
+<?php
+return [
+    'BASE_URL' => 'http://localhost/SGA---Academic-Services-Management-System/',
+    'DEBUG' => true,
+    'SESSION_TIMEOUT' => 3600
+];
+```
 
-1. **Login com diferentes perfis**
-   - Aluno: joao_silva / password123
-   - Funcionário: carlos_funcionario / password123
-   - Gestor: ana_gestor / password123
+## 🌐 Multi-language Support
 
-2. **Verificar Dashboards**
-   - Cada perfil tem um dashboard diferente
-   - Conteúdo corresponde ao papel
+The system includes translation files for:
+- **Portuguese** (`translations/pt.php`) - Default language
+- **English** (`translations/en.php`) - English interface
 
-3. **Testar Segurança**
-   - Tentar aceder a páginas sem estar autenticado → redireciona para login
-   - Aluno não pode aceder a pages de funcionário
-   - Timeout de sessão após 1 hora
+Switch languages via the language switcher in the navigation bar.
 
-## 📖 Documentação Técnica
+## 📚 Key Files and Directories
 
-### Padrões Utilizados
-- **MVC (Model-View-Controller)** - Separação clara de responsabilidades
-- **Dependency Injection** - PDO injetado nos models
-- **Bootstrap Pattern** - Inicialização centralizada
-- **Helper Functions** - Funções reutilizáveis
+| Path | Purpose |
+|------|---------|
+| `config/` | Application and database configuration |
+| `core/` | Framework core files (routing, helpers, sessions) |
+| `models/` | Data access layer classes |
+| `controllers/` | Application logic and request handling |
+| `views/` | HTML templates and presentation |
+| `public/` | Web-accessible directory (entry point) |
+| `sql/` | Database schema and seed scripts |
+| `routes/web.php` | Application route definitions |
 
-### Convenções
-- Tabelas em inglês (snake_case)
-- Funções em português
-- Variáveis em português/inglês conforme contexto
-- Comentários em inglês (técnico) ou português (funcional)
+## 🤝 Contributing
 
-## 🆘 Troubleshooting
+Contributions are welcome! Please follow these guidelines:
 
-**Erro: "conexão recusada"**
-- Verificar se MySQL está rodando
-- Verificar credentials em /config/database.php
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-**Erro: "tabelas não encontradas"**
-- Executar schema.sql e seeds.sql
-- Verificar nome da base de dados
+### Code Standards
+- Follow Clean Code principles
+- Use meaningful variable and function names
+- Add comments for complex logic
+- Test all changes thoroughly before submitting
 
-**Erro: "acesso negado"**
-- Fazer logout e login novamente
-- Verificar cookies habilitados
+## 📄 License
 
-## 💡 Dicas para Desenvolvimento
+This project is an academic management system developed for educational purposes.
 
-1. **Usar o modelo de bootstrap**
-   ```php
-   require_once __DIR__ . '/core/bootstrap.php';
-   requireAuth(); // Se precisa estar autenticado
-   ```
+## 📞 Support
 
-2. **Usar os models**
-   ```php
-   require_once __DIR__ . '/models/User.php';
-   $user = new User($pdo);
-   $data = $user->getById($id);
-   ```
-
-3. **Usar helpers**
-   ```php
-   echo h($variable); // Escape HTML
-   requireAuth(); // Check auth
-   hasRole('aluno'); // Check role
-   ```
-
-## 📞 Suporte
-
-Para questões técnicas ou bugs, registar um issue no repositório.
+For issues, questions, or suggestions, please open an issue in the repository or contact the development team.
 
 ---
 
-**Versão:** 1.0.0  
-**Autor:** Sistema de Gestão Académica - 2025
+**Last Updated**: March 2024  
+**Status**: Active Development
