@@ -1,0 +1,69 @@
+<?php
+/**
+ * Manager Courses Form View
+ */
+?>
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $course ? t('form.edit_course') : t('form.new_course'); ?> - <?php echo t('dashboard.manager.title'); ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo url('assets/css/app.css'); ?>" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <?php include __DIR__ . '/../layouts/navbar.php'; ?>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>
+                    <i class="fas fa-book"></i> 
+                    <?php echo $course ? t('form.edit_course') : t('form.new_course'); ?>
+                </h2>
+                
+                <?php if ($error): ?>
+                    <?php echo alertError($error); ?>
+                <?php endif; ?>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <form method="POST" novalidate>
+                            <div class="mb-3">
+                                <label for="code" class="form-label"><?php echo t('form.course_code'); ?> *</label>
+                                <input type="text" class="form-control" id="code" name="code" 
+                                       value="<?php echo h($course['code'] ?? ''); ?>" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label"><?php echo t('form.course_name'); ?> *</label>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       value="<?php echo h($course['name'] ?? ''); ?>" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label"><?php echo t('form.description'); ?></label>
+                                <textarea class="form-control" id="description" name="description" rows="4"><?php echo h($course['description'] ?? ''); ?></textarea>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-sm-flex justify-content-sm-end">
+                                <a href="<?php echo url('manager/courses.php'); ?>" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> <?php echo t('form.cancel'); ?>
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> <?php echo t('form.save'); ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo url('assets/js/app.js'); ?>"></script>
+</body>
+</html>

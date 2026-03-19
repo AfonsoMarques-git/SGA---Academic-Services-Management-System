@@ -1,0 +1,47 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Set the base url
+    # This allows the app to work with nested directories
+    RewriteBase /
+    
+    # Protect the config, core, models, views, sql directories
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^core/ - [F,L]
+    RewriteRule ^models/ - [F,L]
+    RewriteRule ^views/ - [F,L]
+    RewriteRule ^sql/ - [F,L]
+    RewriteRule ^routes/ - [F,L]
+    
+    # If the request is not a file or directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Forward the request to index.php
+    # RewriteRule ^(.*)$ index.php?path=$1 [QSA,L]
+</IfModule>
+
+# Allow access to public assets
+<FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|svg)$">
+    <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 week"
+    </IfModule>
+</FilesMatch>
+
+# Prevent access to sensitive files
+<Files "*.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# NOTE: Do NOT block .php files in public folder!
+# <Files "*.php">
+#     Order Allow,Deny
+#     Deny from all
+# </Files>
+
+<FilesMatch "(schema|seeds)\.sql$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
