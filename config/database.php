@@ -5,7 +5,7 @@
  */
 
 $db_host = 'localhost';
-$db_name = 'aulasphp';
+$db_name = 'sagDatabase';
 $db_user = 'root';
 $db_pass = '';
 
