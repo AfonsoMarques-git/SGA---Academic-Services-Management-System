@@ -1,0 +1,1 @@
+<?php // Logic for logout, move from public/logout.php if needed ?>

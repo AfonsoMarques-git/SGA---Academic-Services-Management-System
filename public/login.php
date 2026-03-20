@@ -130,6 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100"><?php echo t('auth.login_button'); ?></button>
+                    <a href="matricula.php" class="btn btn-outline-secondary w-100 mt-2">
+                        <i class="fas fa-user-plus"></i> Fazer Matrícula
+                    </a>
                 </form>
             </section>
         </div>

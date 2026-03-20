@@ -18,13 +18,14 @@ class CourseUnit {
             VALUES (:code, :name, :ects, :description, :is_active)
         ");
         
-        return $stmt->execute([
-            ':code' => $data['code'],
-            ':name' => $data['name'],
-            ':ects' => $data['ects'] ?? 6,
-            ':description' => $data['description'] ?? null,
-            ':is_active' => $data['is_active'] ?? true,
-        ]);
+            return $stmt->execute([
+                ':code' => $data['code'],
+                ':name' => $data['name'],
+                ':ects' => $data['ects'] ?? 6,
+                ':description' => $data['description'] ?? null,
+                ':hours' => $data['hours'] ?? 0,
+                ':is_active' => $data['is_active'] ?? true,
+            ]);
     }
     
     /**
@@ -61,11 +62,13 @@ class CourseUnit {
             WHERE id = :id
         ");
         
-        return $stmt->execute([
-            ':id' => $id,
-            ':name' => $data['name'],
-            ':ects' => $data['ects'],
-            ':description' => $data['description'] ?? null,
-        ]);
+            return $stmt->execute([
+                ':id' => $id,
+                ':name' => $data['name'],
+                ':ects' => $data['ects'],
+                ':description' => $data['description'],
+                ':hours' => $data['hours'],
+                ':is_active' => $data['is_active'],
+            ]);
     }
 }

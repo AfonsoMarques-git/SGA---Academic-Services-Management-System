@@ -165,12 +165,10 @@ class ManagerUsersController {
      */
     public function deactivate($id) {
         requireRole('gestor');
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt = $this->pdo->prepare("UPDATE users SET is_active = 0 WHERE id = ?");
                 $stmt->execute([$id]);
-                
                 setFlash('success', 'Utilizador desativado com sucesso');
                 header('Location: users.php');
                 exit;
@@ -178,7 +176,46 @@ class ManagerUsersController {
                 setFlash('error', 'Erro ao desativar utilizador: ' . $e->getMessage());
             }
         }
-        
+        header('Location: users.php');
+        exit;
+    }
+
+    /**
+     * Activate user
+     */
+    public function activate($id) {
+        requireRole('gestor');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $stmt = $this->pdo->prepare("UPDATE users SET is_active = 1 WHERE id = ?");
+                $stmt->execute([$id]);
+                setFlash('success', 'Utilizador ativado com sucesso');
+                header('Location: users.php');
+                exit;
+            } catch (Exception $e) {
+                setFlash('error', 'Erro ao ativar utilizador: ' . $e->getMessage());
+            }
+        }
+        header('Location: users.php');
+        exit;
+    }
+
+    /**
+     * Delete user
+     */
+    public function delete($id) {
+        requireRole('gestor');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = ?");
+                $stmt->execute([$id]);
+                setFlash('success', 'Utilizador apagado com sucesso');
+                header('Location: users.php');
+                exit;
+            } catch (Exception $e) {
+                setFlash('error', 'Erro ao apagar utilizador: ' . $e->getMessage());
+            }
+        }
         header('Location: users.php');
         exit;
     }

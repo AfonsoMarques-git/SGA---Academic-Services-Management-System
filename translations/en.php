@@ -150,6 +150,8 @@ return [
     'role.gestor pedagógico' => 'Manager',
     
     // Common
+    // Student Dashboard - Password Change
+    'student_dashboard.change_password' => 'Change Password',
     'common.not_defined' => 'Not defined',
     'common.select_option' => 'Select an option',
     'common.created_at' => 'Created At',
@@ -164,6 +166,8 @@ return [
     'common.actions' => 'Actions',
     'common.edit' => 'Edit',
     'common.delete' => 'Delete',
+    'common.activate' => 'Activate',
+    'common.confirm_delete' => 'Are you sure you want to delete this user? This action is irreversible.',
     'common.deactivate' => 'Deactivate',
     'common.active' => 'Active',
     'common.inactive' => 'Inactive',

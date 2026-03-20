@@ -1,0 +1,1 @@
+<!-- Password reset/change form placeholder -->

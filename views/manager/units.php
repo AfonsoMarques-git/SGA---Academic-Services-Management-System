@@ -44,6 +44,10 @@
                             <th><?php echo t('units.code'); ?></th>
                             <th><?php echo t('units.name'); ?></th>
                             <th><?php echo t('units.ects'); ?></th>
+                            <th>Horas</th>
+                            <th>Curso</th>
+                            <th>Ano</th>
+                            <th>Semestre</th>
                             <th><?php echo t('units.description'); ?></th>
                             <th><?php echo t('units.created_date'); ?></th>
                             <th><?php echo t('common.actions'); ?></th>
@@ -57,11 +61,32 @@
                                 </td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($units as $unit): ?>
+                            <?php 
+                            require_once __DIR__ . '/../../models/StudyPlan.php';
+                            require_once __DIR__ . '/../../models/Curso.php';
+                            $studyPlanModel = new StudyPlan($GLOBALS['pdo']);
+                            $cursoModel = new Curso($GLOBALS['pdo']);
+                            foreach ($units as $unit): 
+                                // Busca associação (pega só a primeira, se houver)
+                                $plan = null;
+                                $plans = $studyPlanModel->getByCourse(0); // hack para evitar erro se não houver
+                                $stmt = $GLOBALS['pdo']->prepare("SELECT * FROM study_plans WHERE unit_id = ? LIMIT 1");
+                                $stmt->execute([$unit['id']]);
+                                $plan = $stmt->fetch();
+                                $cursoNome = '-';
+                                if ($plan && !empty($plan['course_id'])) {
+                                    $curso = $cursoModel->getById($plan['course_id']);
+                                    $cursoNome = $curso['name'] ?? '-';
+                                }
+                            ?>
                                 <tr>
                                     <td><strong><?php echo h($unit['code']); ?></strong></td>
                                     <td><?php echo h($unit['name']); ?></td>
                                     <td><span class="badge bg-primary"><?php echo h($unit['ects']); ?></span></td>
+                                    <td><?php echo h($unit['hours'] ?? 0); ?></td>
+                                    <td><?php echo h($cursoNome); ?></td>
+                                    <td><?php echo h($plan['academic_year_number'] ?? '-'); ?></td>
+                                    <td><?php echo h($plan['semester'] ?? '-'); ?></td>
                                     <td><?php echo h(substr($unit['description'] ?? '', 0, 50)); ?></td>
                                     <td><?php echo formatDate($unit['created_at'] ?? ''); ?></td>
                                     <td>

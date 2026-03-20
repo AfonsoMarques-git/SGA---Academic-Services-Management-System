@@ -1,0 +1,1 @@
+<?php // Entry point for auth logic if needed ?>

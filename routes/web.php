@@ -85,6 +85,8 @@ $router->match(['GET', 'POST'], '/manager/users', function() {
         'create' => $controller->create(),
         'edit' => $id ? $controller->edit($id) : $controller->index(),
         'deactivate' => $id ? $controller->deactivate($id) : $controller->index(),
+        'activate' => $id ? $controller->activate($id) : $controller->index(),
+        'delete' => $id ? $controller->delete($id) : $controller->index(),
         default => $controller->index()
     };
     

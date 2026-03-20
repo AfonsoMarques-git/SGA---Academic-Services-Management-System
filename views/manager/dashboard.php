@@ -136,6 +136,47 @@
                 </div>
             </div>
         </div>
+
+        <!-- Matrículas pendentes -->
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Matrículas Pendentes</h5>
+                <small class="text-muted">Aprovação de novos alunos</small>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Utilizador</th>
+                                <th>Curso</th>
+                                <th>Data Nasc.</th>
+                                <th>Data Pedido</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($matriculasPendentes as $m): ?>
+                                <tr>
+                                    <td><?php echo h($m['full_name']); ?></td>
+                                    <td><?php echo h($m['email']); ?></td>
+                                    <td><?php echo h($m['username']); ?></td>
+                                    <td><?php echo h($m['course_id']); ?></td>
+                                    <td><?php echo h($m['birth_date']); ?></td>
+                                    <td><?php echo h($m['created_at']); ?></td>
+                                    <td>
+                                        <a href="<?php echo url('manager/matriculas.php?action=aceitar&id=' . (int) $m['id']); ?>" class="btn btn-success btn-sm">Aceitar</a>
+                                        <a href="<?php echo url('manager/matriculas.php?action=rejeitar&id=' . (int) $m['id']); ?>" class="btn btn-danger btn-sm">Rejeitar</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,1 @@
+<?php // Centralize authentication logic if needed ?>

@@ -88,6 +88,19 @@
                                                     <i class="fas fa-ban"></i> <?php echo t('common.deactivate'); ?>
                                                 </button>
                                             </form>
+                                        <?php else: ?>
+                                            <form method="POST" action="<?php echo url('manager/users.php?action=activate&id=' . $user['id']); ?>" 
+                                                  style="display:inline;" onsubmit="return confirm('<?php echo t('common.confirm'); ?>');">
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="fas fa-check"></i> <?php echo t('common.activate'); ?>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="<?php echo url('manager/users.php?action=delete&id=' . $user['id']); ?>" 
+                                                  style="display:inline;" onsubmit="return confirm('<?php echo t('common.confirm_delete'); ?>');">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash"></i> <?php echo t('common.delete'); ?>
+                                                </button>
+                                            </form>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

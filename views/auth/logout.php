@@ -1,0 +1,1 @@
+<?php // Logout view (optional, usually just redirects) ?>

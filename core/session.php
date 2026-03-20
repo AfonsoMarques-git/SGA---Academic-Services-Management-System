@@ -3,6 +3,8 @@
  * Session Management
  */
 
+require_once __DIR__ . '/helpers.php';
+
 session_start();
 
 // Check for session timeout

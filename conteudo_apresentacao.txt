@@ -1,0 +1,61 @@
+SGA — Academic Services Management System
+
+1. Título e Identificação do Projeto
+Nome do Projeto: SGA — Academic Services Management System
+Equipe de Desenvolvimento: [Inserir nomes dos membros]
+
+2. Introdução
+O SGA é um sistema desenvolvido para facilitar a gestão acadêmica em instituições de ensino, centralizando processos como matrículas, gestão de cursos, lançamento de notas e geração de relatórios.
+
+3. Motivação e Justificativa
+A necessidade de modernizar e automatizar processos acadêmicos motivou o desenvolvimento do SGA. O sistema visa reduzir erros, agilizar tarefas administrativas e melhorar a experiência de alunos, professores e gestores.
+
+4. Funcionalidades Principais
+- Gestão de cursos: criação, edição e exclusão de cursos
+- Gestão de unidades curriculares: administração das disciplinas
+- Gestão de utilizadores: alunos, staff e gestores
+- Matrículas e pedidos de inscrição
+- Lançamento e consulta de notas
+- Geração de relatórios e estatísticas
+
+5. Arquitetura do Sistema
+O sistema segue o padrão MVC (Model-View-Controller), separando a lógica de negócio, apresentação e manipulação de dados. Utiliza PHP para backend, MySQL para banco de dados e HTML/CSS/JS para frontend.
+
+6. Fluxo de Utilização
+- Aluno: realiza matrícula, consulta histórico e notas
+- Staff: lança notas, avalia pedidos de matrícula
+- Gestor: gerencia cursos, unidades, utilizadores e gera relatórios
+
+7. Demonstração das Telas
+Principais telas do sistema:
+- Login
+- Dashboard de cada perfil
+- Gestão de cursos, unidades, utilizadores
+- Matrículas e lançamento de notas
+
+8. Banco de Dados
+O banco de dados é estruturado em tabelas como Aluno, Curso, Unidade Curricular, Matrícula, Notas, Utilizador, entre outras, garantindo integridade e relacionamento entre os dados.
+
+9. Segurança e Controle de Acesso
+O sistema implementa autenticação de utilizadores e permissões de acesso conforme o perfil, protegendo dados sensíveis e restringindo funcionalidades.
+
+10. Internacionalização
+O SGA suporta múltiplos idiomas, permitindo alternância entre português e inglês, facilitando o uso por diferentes públicos.
+
+11. Testes e Validação
+Foram realizados testes funcionais e de usabilidade para garantir o correto funcionamento das funcionalidades e a experiência do utilizador.
+
+12. Desafios Encontrados
+Durante o desenvolvimento, destacam-se desafios como integração de diferentes perfis de utilizador, implementação de permissões e internacionalização.
+
+13. Próximos Passos e Melhorias Futuras
+- Implementação de novos relatórios
+- Integração com sistemas externos
+- Otimização de performance
+- Expansão para dispositivos móveis
+
+14. Conclusão
+O SGA representa um avanço na gestão acadêmica, promovendo eficiência, transparência e facilidade de acesso às informações para toda a comunidade escolar.
+
+15. Perguntas e Respostas
+[Espaço para interação com a audiência]

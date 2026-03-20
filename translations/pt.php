@@ -150,6 +150,8 @@ return [
     'role.gestor pedagógico' => 'Gestor',
     
     // Common
+    // Student Dashboard - Password Change
+    'student_dashboard.change_password' => 'Alterar Senha',
     'common.not_defined' => 'Não definido',
     'common.select_option' => 'Selecione uma opção',
     'common.created_at' => 'Data Criação',
@@ -164,6 +166,8 @@ return [
     'common.actions' => 'Ações',
     'common.edit' => 'Editar',
     'common.delete' => 'Eliminar',
+    'common.activate' => 'Ativar',
+    'common.confirm_delete' => 'Tem a certeza que pretende apagar este utilizador? Esta ação é irreversível.',
     'common.deactivate' => 'Desativar',
     'common.active' => 'Ativo',
     'common.inactive' => 'Inativo',

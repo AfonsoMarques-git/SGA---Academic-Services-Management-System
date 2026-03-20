@@ -61,6 +61,8 @@ if ($role === 'aluno') {
         // Keep default zero values if optional academic tables are unavailable.
     }
     
+    // Matrículas pendentes (públicas)
+    $matriculasPendentes = $pdo->query("SELECT * FROM enrollment_requests WHERE status = 'pendente' ORDER BY created_at ASC")->fetchAll(PDO::FETCH_ASSOC);
     include __DIR__ . '/../views/manager/dashboard.php';
     
 } else {

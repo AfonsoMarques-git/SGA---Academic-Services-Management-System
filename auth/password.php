@@ -1,0 +1,1 @@
+<?php // Password reset/change logic placeholder ?>

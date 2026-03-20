@@ -156,8 +156,20 @@ CREATE TABLE student_records (
 -- =====================================================
 CREATE TABLE enrollment_requests (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
+    -- Para matrícula pública:
+    full_name VARCHAR(255),
+    email VARCHAR(255),
+    username VARCHAR(100),
+    birth_date DATE,
+    national_id VARCHAR(20),
+    tax_number VARCHAR(20),
+    phone VARCHAR(20),
+    address TEXT,
+    city VARCHAR(100),
+    postal_code VARCHAR(10),
+    course_id INT,
+    -- Para integração com fluxo antigo:
+    user_id INT,
     student_record_id INT,
     request_type VARCHAR(50),
     status VARCHAR(20) DEFAULT 'pendente',

@@ -32,7 +32,7 @@ class User {
      */
     public function findById($id) {
         $stmt = $this->pdo->prepare("
-            SELECT u.id, u.username, u.role_id,
+            SELECT u.id, u.username, u.password_hash, u.role_id,
                    r.name as role_name,
                    u.full_name, u.email
             FROM users u
@@ -114,5 +114,19 @@ class User {
         ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /**
+     * Atualiza a senha do usuário
+     */
+    public function updatePassword($userId, $newPassword) {
+        $stmt = $this->pdo->prepare("
+            UPDATE users
+            SET password_hash = :password_hash
+            WHERE id = :id
+        ");
+        return $stmt->execute([
+            ':password_hash' => password_hash($newPassword, PASSWORD_DEFAULT),
+            ':id' => $userId
+        ]);
     }
 }

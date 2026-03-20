@@ -1,274 +1,263 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Relatorio de Projeto - SGA</title>
+  <title>Relatório de Projeto - SGA</title>
   <style>
-    @page { size: A4; margin: 16mm; }
-    :root {
-      --primary: #1f4e79;
-      --primary-soft: #e9f1f9;
-      --text: #1f2937;
-      --muted: #5b6678;
-      --border: #d7deea;
-      --surface: #ffffff;
-      --surface-soft: #f7f9fc;
-    }
     body {
-      margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background: var(--surface);
-      line-height: 1.55;
-      font-size: 11pt;
-    }
-    .cover {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      background: linear-gradient(180deg, var(--primary-soft), #ffffff);
-      margin-bottom: 18px;
-    }
-    .cover h1 {
-      margin: 0 0 6px;
-      color: var(--primary);
-      font-size: 26pt;
-      letter-spacing: -0.02em;
-    }
-    .cover h2 {
+      color: #1f2937;
+      background: #f7f9fc;
       margin: 0;
-      color: var(--muted);
-      font-size: 14pt;
-      font-weight: 600;
     }
+
+    .cover {
+      background: linear-gradient(120deg, #e9f1f9 60%, #fff 100%);
+      padding: 40px 30px 30px 30px;
+      border-radius: 18px;
+      margin: 24px auto 18px auto;
+      max-width: 800px;
+      box-shadow: 0 2px 12px #0001;
+    }
+
+    .cover h1 {
+      color: #1f4e79;
+      font-size: 2.5em;
+      margin: 0 0 8px 0;
+    }
+
+    .cover h2 {
+      color: #5b6678;
+      font-size: 1.2em;
+      margin: 0 0 12px 0;
+    }
+
     .meta {
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 10.5pt;
+      color: #5b6678;
+      font-size: 1em;
+      margin-top: 18px;
     }
+
     h2 {
-      margin: 18px 0 8px;
-      color: var(--primary);
-      font-size: 15pt;
-      border-bottom: 1px solid var(--border);
+      color: #1f4e79;
+      border-bottom: 1px solid #d7deea;
       padding-bottom: 4px;
+      margin-top: 32px;
     }
+
     h3 {
-      margin: 12px 0 6px;
       color: #173a5b;
-      font-size: 12pt;
+      margin-top: 18px;
     }
-    p {
-      margin: 6px 0;
-      text-align: justify;
-    }
-    ul {
-      margin: 6px 0 10px 18px;
-    }
-    li {
-      margin: 3px 0;
-    }
+
+    p,
+    ul,
     table {
-      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 12px auto;
+    }
+
+    ul {
+      padding-left: 24px;
+    }
+
+    table {
       border-collapse: collapse;
-      margin: 8px 0 12px;
-      font-size: 10.5pt;
+      width: 100%;
+      background: #fff;
     }
-    th, td {
-      border: 1px solid var(--border);
-      padding: 7px;
-      text-align: left;
-      vertical-align: top;
+
+    th,
+    td {
+      border: 1px solid #d7deea;
+      padding: 8px;
     }
+
     th {
-      background: var(--primary-soft);
-      color: var(--primary);
+      background: #e9f1f9;
+      color: #1f4e79;
     }
+
     .box {
-      border: 1px solid var(--border);
+      background: #f7f9fc;
+      border: 1px solid #d7deea;
       border-radius: 10px;
-      padding: 10px 12px;
-      background: var(--surface-soft);
-      margin: 8px 0 12px;
+      padding: 12px 16px;
+      margin: 12px 0;
     }
-    .page-break { page-break-before: always; }
-    .muted { color: var(--muted); }
+
+    .github {
+      margin: 32px auto 0 auto;
+      text-align: center;
+    }
+
+    .github a {
+      color: #1f4e79;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
+
+    .github a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      color: #5b6678;
+      font-size: 0.95em;
+      text-align: center;
+      margin: 32px 0 0 0;
+    }
   </style>
 </head>
+
 <body>
-  <section class="cover">
+  <div class="cover">
     <h1>Relatório de Projeto</h1>
     <h2>SGA - Sistema de Gestão de Serviços Académicos</h2>
     <div class="meta">
+      <div><strong>Autor:</strong> Afonso Marques</div>
       <div><strong>Unidade Curricular:</strong> Desenvolvimento Web / Projeto de Aplicações</div>
-      <div><strong>Tipo de Documento:</strong> Relatório completo para apresentação ao professor</div>
       <div><strong>Data:</strong> 20/03/2026</div>
     </div>
-  </section>
+  </div>
 
   <h2>1. Introdução</h2>
-  <p>Este relatório apresenta o projeto SGA (Sistema de Gestão de Serviços Académicos), uma aplicação web desenvolvida para apoiar o funcionamento académico de uma instituição de ensino. O sistema foi pensado para centralizar processos importantes, reduzir trabalho manual e organizar a informação de forma segura, clara e acessível para diferentes perfis de utilizadores.</p>
-  <p>O foco principal da aplicação é permitir que cada perfil (aluno, funcionário e gestor) execute as suas tarefas dentro do mesmo sistema, com permissões adequadas e interface simples de utilizar.</p>
+  <p>O SGA é uma aplicação web desenvolvida para centralizar e digitalizar os principais processos académicos de uma
+    instituição de ensino. O sistema foi desenhado para ser seguro, intuitivo e adaptado a diferentes perfis de
+    utilizador (aluno, funcionário, gestor), promovendo eficiência e transparência.</p>
 
-  <h2>2. Objetivo do Projeto</h2>
+  <h2>2. Objetivos do Projeto</h2>
   <div class="box">
-    <p>O objetivo do SGA é disponibilizar uma plataforma única para:</p>
     <ul>
-      <li>Gestão de fichas de aluno.</li>
-      <li>Processamento de pedidos de matrícula/inscrição.</li>
-      <li>Registo e consulta de pautas/notas.</li>
-      <li>Administração de cursos, unidades curriculares e utilizadores.</li>
-      <li>Produção de relatórios de apoio à gestão académica.</li>
+      <li>Facilitar a gestão de matrículas, fichas de aluno e pautas.</li>
+      <li>Reduzir o trabalho manual e o risco de erros administrativos.</li>
+      <li>Permitir acompanhamento em tempo real do progresso académico.</li>
+      <li>Oferecer relatórios e indicadores para apoio à gestão.</li>
+      <li>Garantir segurança e privacidade dos dados.</li>
     </ul>
   </div>
 
-  <h2>3. Funcionalidades da Aplicação</h2>
-
-  <h3>3.1 Funcionalidades Gerais</h3>
+  <h2>3. Arquitetura e Tecnologias</h2>
   <ul>
-    <li>Login seguro por utilizador e palavra-passe.</li>
-    <li>Dashboards diferentes por perfil.</li>
-    <li>Mensagens de feedback (sucesso/erro) em todas as operações principais.</li>
-    <li>Suporte multilingue (Português e Inglês).</li>
-    <li>Tema visual claro/escuro com design consistente.</li>
+    <li><strong>Backend:</strong> PHP 7.4+, padrão MVC, PDO para acesso seguro ao MySQL/MariaDB</li>
+    <li><strong>Frontend:</strong> HTML5, CSS3 (Bootstrap 5), JavaScript</li>
+    <li><strong>Base de Dados:</strong> MySQL/MariaDB</li>
+    <li><strong>Servidor:</strong> XAMPP/Apache</li>
+    <li><strong>Internacionalização:</strong> Suporte a PT e EN</li>
+    <li><strong>Segurança:</strong> Hash de passwords, prepared statements, controlo de sessão</li>
   </ul>
 
-  <h3>3.2 Funcionalidades do Aluno</h3>
+  <h2>4. Funcionalidades</h2>
+  <h3>4.1 Gerais</h3>
   <ul>
-    <li>Visualizar dashboard pessoal.</li>
-    <li>Criar e editar a ficha de aluno.</li>
-    <li>Acompanhar o estado da ficha (rascunho, submetida, aprovada, rejeitada).</li>
-    <li>Consultar pedidos de matrícula/inscrição e respetivo estado.</li>
-    <li>Usar o módulo de mensagens internas com funcionários.</li>
+    <li>Login seguro e gestão de sessão</li>
+    <li>Dashboards personalizados por perfil</li>
+    <li>Mensagens de feedback e notificações</li>
+    <li>Suporte multilingue</li>
+    <li>Design responsivo e acessível</li>
+  </ul>
+  <h3>4.2 Aluno</h3>
+  <ul>
+    <li>Preencher e submeter ficha de aluno</li>
+    <li>Consultar estado da ficha e matrículas</li>
+    <li>Comunicar com funcionários via mensagens internas</li>
+  </ul>
+  <h3>4.3 Funcionário</h3>
+  <ul>
+    <li>Gerir pautas e lançar notas</li>
+    <li>Aprovar/rejeitar matrículas e fichas</li>
+    <li>Comunicar com alunos</li>
+  </ul>
+  <h3>4.4 Gestor</h3>
+  <ul>
+    <li>Gerir cursos, unidades curriculares e utilizadores</li>
+    <li>Consultar indicadores e exportar relatórios</li>
+    <li>Gerir permissões e perfis de acesso</li>
   </ul>
 
-  <h3>3.3 Funcionalidades do Funcionário</h3>
-  <ul>
-    <li>Consultar e gerir pautas de avaliação.</li>
-    <li>Introduzir e atualizar notas por aluno.</li>
-    <li>Consultar pedidos pendentes de matrícula/inscrição.</li>
-    <li>Aprovar ou rejeitar pedidos com observações.</li>
-    <li>Avaliar fichas submetidas pelos alunos.</li>
-  </ul>
-
-  <h3>3.4 Funcionalidades do Gestor</h3>
-  <ul>
-    <li>Gerir cursos (criar, editar, desativar).</li>
-    <li>Gerir unidades curriculares (criar, editar, desativar).</li>
-    <li>Gerir utilizadores e perfis de acesso.</li>
-    <li>Consultar indicadores globais da plataforma.</li>
-    <li>Exportar relatórios em formato CSV.</li>
-  </ul>
-
-  <h2>4. O que é permitido fazer na app (Permissões)</h2>
+  <h2>5. Estrutura da Base de Dados (Resumo)</h2>
   <table>
-    <thead>
-      <tr>
-        <th>Funcionalidade</th>
-        <th>Aluno</th>
-        <th>Funcionário</th>
-        <th>Gestor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Entrar no sistema</td><td>Sim</td><td>Sim</td><td>Sim</td></tr>
-      <tr><td>Editar ficha de aluno</td><td>Sim (a própria)</td><td>Consultar/Avaliar</td><td>Consultar/Avaliar</td></tr>
-      <tr><td>Criar/gerir cursos</td><td>Não</td><td>Consulta</td><td>Sim</td></tr>
-      <tr><td>Criar/gerir UCs</td><td>Não</td><td>Consulta</td><td>Sim</td></tr>
-      <tr><td>Gerir utilizadores</td><td>Não</td><td>Não</td><td>Sim</td></tr>
-      <tr><td>Gerir pautas e notas</td><td>Consulta parcial</td><td>Sim</td><td>Supervisão</td></tr>
-      <tr><td>Aprovar/rejeitar pedidos</td><td>Não</td><td>Sim</td><td>Sim</td></tr>
-      <tr><td>Exportar relatórios</td><td>Não</td><td>Parcial</td><td>Sim</td></tr>
-      <tr><td>Mensagens internas</td><td>Sim</td><td>Sim</td><td>Não</td></tr>
-    </tbody>
+    <tr>
+      <th>Tabela</th>
+      <th>Descrição</th>
+    </tr>
+    <tr>
+      <td>users</td>
+      <td>Utilizadores do sistema (aluno, funcionário, gestor)</td>
+    </tr>
+    <tr>
+      <td>aluno</td>
+      <td>Dados detalhados do aluno</td>
+    </tr>
+    <tr>
+      <td>courses</td>
+      <td>Cursos disponíveis</td>
+    </tr>
+    <tr>
+      <td>course_units</td>
+      <td>Unidades curriculares</td>
+    </tr>
+    <tr>
+      <td>enrollment_requests</td>
+      <td>Pedidos de matrícula/inscrição</td>
+    </tr>
+    <tr>
+      <td>student_records</td>
+      <td>Fichas de aluno submetidas</td>
+    </tr>
+    <tr>
+      <td>grade_sheet</td>
+      <td>Pautas/notas lançadas</td>
+    </tr>
+    <tr>
+      <td>request_messages</td>
+      <td>Mensagens internas</td>
+    </tr>
+    <tr>
+      <td>academic_years</td>
+      <td>Anos letivos e semestres</td>
+    </tr>
   </table>
 
-  <div class="page-break"></div>
-
-  <h2>5. Estrutura do Projeto: o que existe em cada pasta</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Pasta/Ficheiro</th>
-        <th>Finalidade no projeto</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>config/</td><td>Configurações da aplicação (constantes, estados, ligação à base de dados).</td></tr>
-      <tr><td>core/</td><td>Núcleo técnico: bootstrap, sessão, helpers, i18n e router.</td></tr>
-      <tr><td>controllers/</td><td>Regras de negócio e controlo dos fluxos de cada módulo.</td></tr>
-      <tr><td>models/</td><td>Acesso e manipulação de dados na base de dados.</td></tr>
-      <tr><td>views/</td><td>Interface apresentada ao utilizador (páginas e componentes).</td></tr>
-      <tr><td>public/</td><td>Ponto de entrada web, páginas acessíveis e assets (CSS/JS).</td></tr>
-      <tr><td>routes/</td><td>Definição de rotas da aplicação.</td></tr>
-      <tr><td>sql/</td><td>Scripts SQL com estrutura e dados iniciais da base de dados.</td></tr>
-      <tr><td>translations/</td><td>Textos da interface em Português e Inglês.</td></tr>
-      <tr><td>docs/</td><td>Documentação e relatórios do projeto.</td></tr>
-      <tr><td>README.md / README_PT.md</td><td>Descrição do projeto, setup e visão geral funcional.</td></tr>
-    </tbody>
-  </table>
-
-  <h2>6. Como o sistema funciona na prática</h2>
-  <h3>6.1 Fluxo principal</h3>
+  <h2>6. Fluxos Principais</h2>
+  <h3>6.1 Matrícula e Aprovação</h3>
   <ul>
-    <li>O utilizador faz login.</li>
-    <li>O sistema identifica o perfil e mostra o dashboard correspondente.</li>
-    <li>As operações permitidas são apresentadas conforme o perfil.</li>
-    <li>Cada ação (guardar, editar, aprovar, rejeitar) é registada na base de dados.</li>
-    <li>O utilizador recebe feedback visual após cada operação.</li>
+    <li>Aluno submete pedido de matrícula</li>
+    <li>Funcionário/gestor aprova ou rejeita</li>
+    <li>Aluno recebe notificação do estado</li>
+  </ul>
+  <h3>6.2 Ficha de Aluno</h3>
+  <ul>
+    <li>Aluno preenche e submete ficha</li>
+    <li>Funcionário avalia e aprova/rejeita</li>
+    <li>Gestor pode consultar todas as fichas</li>
+  </ul>
+  <h3>6.3 Lançamento de Notas</h3>
+  <ul>
+    <li>Funcionário lança notas na pauta</li>
+    <li>Aluno consulta notas lançadas</li>
+    <li>Gestor pode exportar relatórios de notas</li>
   </ul>
 
-  <h3>6.2 Exemplo de ciclo de ficha e pedido</h3>
-  <ol>
-    <li>Aluno preenche/atualiza ficha.</li>
-    <li>Fica registada com estado e data de atualização.</li>
-    <li>Pedido de matrícula/inscrição é analisado por funcionário/gestor.</li>
-    <li>Pedido passa para aprovado ou rejeitado, com observações.</li>
-    <li>Aluno acompanha resultado no dashboard.</li>
-  </ol>
-
-  <h2>7. Como os dados são guardados</h2>
-  <p>A aplicação utiliza base de dados relacional (MySQL/MariaDB), com tabelas separadas por tema: utilizadores, cursos, UCs, fichas, pedidos, pautas e notas. As tabelas estão ligadas entre si por relações (chaves estrangeiras), garantindo coerência dos dados.</p>
+  <h2>7. Conclusão e Melhorias Futuras</h2>
+  <p>O SGA cumpre o objetivo de digitalizar e centralizar os processos académicos essenciais, promovendo eficiência,
+    transparência e segurança. Futuramente, pode ser expandido com:</p>
   <ul>
-    <li>Dados pessoais e académicos dos alunos ficam em tabelas dedicadas.</li>
-    <li>Estados dos processos (pendente/aprovado/rejeitado) ficam guardados em campos próprios.</li>
-    <li>Datas de criação/atualização permitem histórico de alterações.</li>
-    <li>Acesso aos dados é feito com queries preparadas (maior segurança).</li>
+    <li>Integração com sistemas externos (ex: pagamentos, bibliotecas)</li>
+    <li>Notificações por email/SMS</li>
+    <li>Gestão de horários e exames</li>
+    <li>App mobile para alunos e funcionários</li>
+    <li>Relatórios gráficos avançados</li>
   </ul>
 
-  <h2>8. Qualidade visual e alinhamento com o estilo da app</h2>
-  <p>A interface do sistema segue um estilo moderno e minimalista, com foco em legibilidade, contraste equilibrado e consistência visual. O relatório mantém essa mesma linha: cores sóbrias, hierarquia clara de títulos, tabelas limpas e linguagem objetiva, facilitando a leitura por docentes e avaliadores.</p>
-
-  <h2>9. Pontos fortes do projeto</h2>
-  <ul>
-    <li>Boa organização por camadas (MVC).</li>
-    <li>Separação clara de permissões por perfil.</li>
-    <li>Cobertura funcional ampla para contexto académico.</li>
-    <li>Estrutura de base de dados consistente e preparada para evolução.</li>
-    <li>Suporte a idioma e personalização de tema.</li>
-  </ul>
-
-  <h2>10. Melhorias futuras sugeridas</h2>
-  <ul>
-    <li>Adicionar proteção CSRF em todos os formulários.</li>
-    <li>Reforçar políticas de segurança no login (limite de tentativas).</li>
-    <li>Padronizar totalmente o roteamento (evitar duplicação entre rotas e páginas diretas).</li>
-    <li>Expandir auditoria de operações críticas.</li>
-    <li>Criar testes automatizados para maior robustez.</li>
-  </ul>
-
-  <h2>11. Conclusão</h2>
-  <p>O SGA cumpre de forma sólida os objetivos propostos para um sistema de gestão académica, oferecendo funcionalidades relevantes para diferentes perfis de utilizador e uma base técnica organizada para continuidade do projeto. A aplicação está apta para apresentação académica, demonstrando integração entre lógica de negócio, interface e persistência de dados.</p>
-  <p class="muted">Fim do relatório.</p>
+  <div class="github">
+    <h2>Repositório do Projeto</h2>
+    <a href="https://github.com/AfonsoMarques-git/SGA---Academic-Services-Management-System.git" target="_blank">
+      https://github.com/AfonsoMarques-git/SGA---Academic-Services-Management-System.git
+    </a>
+  </div>
 </body>
-  <footer style="margin-top: 2em; text-align: center; font-size: 1.1em;">
-    <p>Repositório do projeto no GitHub:<br>
-      <a href="https://github.com/AfonsoMarques-git/SGA---Academic-Services-Management-System.git" target="_blank">
-        https://github.com/AfonsoMarques-git/SGA---Academic-Services-Management-System.git
-      </a>
-    </p>
-  </footer>
+
 </html>

@@ -1,0 +1,1 @@
+This file is intentionally left blank. The authentication views are not used in the current working version. Login/logout/password views are handled in /public or /views/auth/layouts if needed.

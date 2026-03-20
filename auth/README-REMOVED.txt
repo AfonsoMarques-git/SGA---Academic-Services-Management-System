@@ -1,0 +1,1 @@
+This file is intentionally left blank. The authentication logic has been restored to /core and /public. This folder is not used in the current working version.

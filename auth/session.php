@@ -1,0 +1,3 @@
+<?php
+// ...existing code from core/session.php...
+require_once __DIR__ . '/helpers.php';

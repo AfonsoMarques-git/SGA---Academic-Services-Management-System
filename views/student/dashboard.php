@@ -245,6 +245,10 @@ $requestCount = is_array($enrollmentRequests ?? null) ? count($enrollmentRequest
                             <span><?php echo t('student_dashboard.my_record'); ?></span>
                             <span class="text-muted"><?php echo t('student_dashboard.open'); ?></span>
                         </a>
+                        <a href="<?php echo url('student/change-password.php'); ?>" class="list-group-item list-group-item-action quick-link">
+                            <span><?php echo t('student_dashboard.change_password'); ?></span>
+                            <span class="text-muted">Alterar</span>
+                        </a>
                     </div>
                 </div>
 
