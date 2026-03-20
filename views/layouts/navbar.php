@@ -1,3 +1,16 @@
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('sga-theme');
+                if (!theme) {
+                    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
 <nav class="navbar navbar-expand-lg" aria-label="Navegacao principal">
     <div class="container-fluid px-3 px-lg-4">
         <a class="navbar-brand" href="<?php echo url('dashboard.php'); ?>" aria-label="<?php echo t('nav.back_dashboard'); ?>">

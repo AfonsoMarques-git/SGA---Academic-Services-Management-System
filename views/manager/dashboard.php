@@ -163,8 +163,8 @@
                                     <td><?php echo h($m['full_name']); ?></td>
                                     <td><?php echo h($m['email']); ?></td>
                                     <td><?php echo h($m['username']); ?></td>
-                                    <td><?php echo h($m['course_id']); ?></td>
-                                    <td><?php echo h($m['birth_date']); ?></td>
+                                    <td><?php echo h($m['course_name'] ?? t('common.not_defined')); ?></td>
+                                    <td><?php echo h($m['birth_date'] ?? ''); ?></td>
                                     <td><?php echo h($m['created_at']); ?></td>
                                     <td>
                                         <a href="<?php echo url('manager/matriculas.php?action=aceitar&id=' . (int) $m['id']); ?>" class="btn btn-success btn-sm">Aceitar</a>

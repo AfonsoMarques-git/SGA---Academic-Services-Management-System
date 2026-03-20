@@ -1,3 +1,40 @@
+/* Corrige fundo do modal Bootstrap no tema escuro */
+[data-theme='dark'] .modal-content {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+[data-theme='dark'] .modal-header,
+[data-theme='dark'] .modal-footer {
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+/* Melhorias para select e label no tema escuro */
+[data-theme='dark'] .form-select,
+[data-theme='dark'] .form-control,
+[data-theme='dark'] textarea {
+    background: #1c2533;
+    color: #e8edf6;
+    border-color: #30425e;
+}
+
+[data-theme='dark'] .form-select:focus,
+[data-theme='dark'] .form-control:focus,
+[data-theme='dark'] textarea:focus {
+    background: #222c3c;
+    color: #fff;
+    border-color: #66a5e8;
+}
+
+[data-theme='dark'] .form-label {
+    color: #aeb9cb;
+}
+
+[data-theme='dark'] .form-select option {
+    background: #1c2533;
+    color: #e8edf6;
+}
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {

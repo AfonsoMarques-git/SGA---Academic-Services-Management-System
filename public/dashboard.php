@@ -26,7 +26,41 @@ if ($role === 'aluno') {
     $studentRecord = $alunoModel->getByUserId($userId);
     $cursos = $cursoModel->getAll();
     $enrollmentRequests = $enrollmentRequestModel->getByStudentId($userId);
-    
+
+    // Processar candidatura a curso
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['action'] ?? '') === 'apply_course') {
+        $courseId = $_POST['course_id'] ?? '';
+        if (!$courseId) {
+            setFlash('error', 'Selecione um curso para se candidatar.');
+            header('Location: dashboard.php');
+            exit;
+        }
+        // Verificar se já existe candidatura pendente para este curso
+        $jaCandidatado = false;
+        foreach ($enrollmentRequests as $req) {
+            if ($req['course_id'] == $courseId && $req['status'] === 'pendente') {
+                $jaCandidatado = true;
+                break;
+            }
+        }
+        if ($jaCandidatado) {
+            setFlash('error', 'Já existe uma candidatura pendente para este curso.');
+            header('Location: dashboard.php');
+            exit;
+        }
+        // Criar candidatura
+        $enrollmentRequestModel->create([
+            'user_id' => $userId,
+            'course_id' => $courseId,
+            'student_record_id' => $studentRecord['id'] ?? null,
+            'request_type' => 'candidatura',
+            'notes_by_student' => null
+        ]);
+        setFlash('success', 'Candidatura submetida com sucesso!');
+        header('Location: dashboard.php');
+        exit;
+    }
+
     include __DIR__ . '/../views/student/dashboard.php';
     
 } elseif ($role === 'funcionario' || $role === 'professor') {
@@ -60,9 +94,18 @@ if ($role === 'aluno') {
     } catch (Exception $e) {
         // Keep default zero values if optional academic tables are unavailable.
     }
-    
-    // Matrículas pendentes (públicas)
-    $matriculasPendentes = $pdo->query("SELECT * FROM enrollment_requests WHERE status = 'pendente' ORDER BY created_at ASC")->fetchAll(PDO::FETCH_ASSOC);
+
+    // Matrículas pendentes (completo)
+    $sql = "
+        SELECT er.*, u.full_name, u.email, u.username, sr.birth_date, c.name AS course_name
+        FROM enrollment_requests er
+        LEFT JOIN users u ON er.user_id = u.id
+        LEFT JOIN student_records sr ON er.student_record_id = sr.id
+        LEFT JOIN courses c ON er.course_id = c.id
+        WHERE er.status = 'pendente'
+        ORDER BY er.created_at ASC
+    ";
+    $matriculasPendentes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     include __DIR__ . '/../views/manager/dashboard.php';
     
 } else {

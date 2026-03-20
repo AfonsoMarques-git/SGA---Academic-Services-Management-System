@@ -71,6 +71,115 @@ $requestCount = is_array($enrollmentRequests ?? null) ? count($enrollmentRequest
     <?php include __DIR__ . '/../layouts/navbar.php'; ?>
 
     <div class="container mt-4 mb-5">
+        <!-- Candidaturas a Cursos -->
+        <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Candidaturas a Cursos</h4>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCandidatarCurso">
+                    <i class="fas fa-plus"></i> Candidatar-me a curso
+                </button>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-3">Minhas candidaturas pendentes</h6>
+                    <?php 
+                    $pendingRequests = array_filter($enrollmentRequests ?? [], function($req) {
+                        return $req['status'] === 'pendente';
+                    });
+                    ?>
+                    <?php if (!empty($pendingRequests)): ?>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Curso</th>
+                                        <th>Data</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($pendingRequests as $req): ?>
+                                        <tr>
+                                            <td><?= h($req['course_name']) ?></td>
+                                            <td><?= formatDate($req['created_at']) ?></td>
+                                            <td><span class="badge bg-warning text-dark">Pendente</span></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-muted mb-0">Ainda não submeteu nenhuma candidatura pendente a cursos.</p>
+                    <?php endif; ?>
+
+                    <!-- Histórico de candidaturas aceites/recusadas -->
+                    <?php 
+                    $finalizedRequests = array_filter($enrollmentRequests ?? [], function($req) {
+                        return in_array($req['status'], ['aprovado', 'recusado']);
+                    });
+                    ?>
+                    <?php if (!empty($finalizedRequests)): ?>
+                        <hr class="my-4">
+                        <h6 class="mb-3">Histórico de candidaturas</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Curso</th>
+                                        <th>Data</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($finalizedRequests as $req): ?>
+                                        <tr>
+                                            <td><?= h($req['course_name']) ?></td>
+                                            <td><?= formatDate($req['created_at']) ?></td>
+                                            <td>
+                                                <?php if ($req['status'] === 'aprovado'): ?>
+                                                    <span class="badge bg-success">Aceite</span>
+                                                <?php elseif ($req['status'] === 'recusado'): ?>
+                                                    <span class="badge bg-danger">Recusada</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal Candidatar a Curso -->
+        <div class="modal fade" id="modalCandidatarCurso" tabindex="-1" aria-labelledby="modalCandidatarCursoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" action="<?= url('dashboard.php?action=apply_course') ?>">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCandidatarCursoLabel">Candidatar-me a Curso</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="course_id" class="form-label">Curso</label>
+                                <select class="form-select" id="course_id" name="course_id" required>
+                                    <option value="">Selecione o curso</option>
+                                    <?php foreach (($cursos ?? []) as $course): ?>
+                                        <option value="<?= h($course['id']) ?>"><?= h($course['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Submeter candidatura</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <section class="student-hero">
             <div class="row align-items-center g-3">
                 <div class="col-lg-8">

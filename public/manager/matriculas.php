@@ -13,22 +13,28 @@ requireRole('gestor');
 // Aceitar matrícula
 if (isset($_GET['action']) && $_GET['action'] === 'aceitar' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
-    // Buscar dados da matrícula
-    $stmt = $pdo->prepare("SELECT * FROM enrollment_requests WHERE id = ? AND status = 'pendente'");
+    // Buscar dados da matrícula e do utilizador
+    $stmt = $pdo->prepare("SELECT er.*, u.full_name, u.email, u.username FROM enrollment_requests er LEFT JOIN users u ON er.user_id = u.id WHERE er.id = ? AND er.status = 'pendente'");
     $stmt->execute([$id]);
     $matricula = $stmt->fetch();
-    if ($matricula) {
+    if ($matricula && $matricula['full_name'] && $matricula['email'] && $matricula['username']) {
         // Gerar senha provisória
         $senha_prov = bin2hex(random_bytes(4));
         $hash = password_hash($senha_prov, PASSWORD_DEFAULT);
-        // Criar utilizador
-        $stmtUser = $pdo->prepare("INSERT INTO users (role_id, full_name, email, username, password_hash, is_active, created_at) VALUES (1, ?, ?, ?, ?, 1, NOW())");
-        $stmtUser->execute([
-            $matricula['full_name'],
-            $matricula['email'],
-            $matricula['username'],
-            $hash
-        ]);
+        // Verificar se já existe utilizador com este username/email
+        $stmtCheck = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+        $stmtCheck->execute([$matricula['username'], $matricula['email']]);
+        $userExists = $stmtCheck->fetch();
+        if (!$userExists) {
+            // Criar utilizador
+            $stmtUser = $pdo->prepare("INSERT INTO users (role_id, full_name, email, username, password_hash, is_active, created_at) VALUES (1, ?, ?, ?, ?, 1, NOW())");
+            $stmtUser->execute([
+                $matricula['full_name'],
+                $matricula['email'],
+                $matricula['username'],
+                $hash
+            ]);
+        }
         // Atualizar matrícula para aceite
         $pdo->prepare("UPDATE enrollment_requests SET status = 'aceite', reviewed_by = ?, reviewed_at = NOW() WHERE id = ?")
             ->execute([$_SESSION['user_id'], $id]);
@@ -39,7 +45,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'aceitar' && isset($_GET['id']
         @mail($to, $subject, $message);
         setFlash('success', 'Matrícula aceite, utilizador criado e email enviado.');
     } else {
-        setFlash('error', 'Matrícula não encontrada ou já processada.');
+        setFlash('error', 'Matrícula não encontrada, já processada ou dados incompletos.');
     }
     header('Location: matriculas.php');
     exit;
