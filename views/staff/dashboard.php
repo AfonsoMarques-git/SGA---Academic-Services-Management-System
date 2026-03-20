@@ -24,7 +24,6 @@
                         <p class="text-muted mb-0"><?php echo t('dashboard.welcome'); ?>, <?php echo h($_SESSION['full_name'] ?? $_SESSION['username']); ?>. <?php echo t('dashboard.staff.subtitle'); ?></p>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="<?php echo url('staff/enrollments.php'); ?>" class="btn btn-outline-primary"><?php echo t('enrollment.manage_short'); ?></a>
                         <a href="<?php echo url('staff/grades.php'); ?>" class="btn btn-primary"><?php echo t('dashboard.manager.open_grades'); ?></a>
                     </div>
                 </div>

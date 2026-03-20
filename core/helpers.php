@@ -1,3 +1,5 @@
+
+
 <?php
 /**
  * Helper Functions
@@ -40,6 +42,9 @@ function normalizeRoleKey($role) {
         'manager' => 'gestor',
         'gestor pedagogico' => 'gestor',
         'gestor pedagógico' => 'gestor',
+        'professor' => 'professor',
+        'docente' => 'professor',
+        'teacher' => 'professor',
     ];
 
     return $roleMap[$role] ?? $role;
@@ -48,9 +53,12 @@ function normalizeRoleKey($role) {
 /**
  * Get translated role label for UI
  */
-function getRoleLabel($role = null) {
+function getRoleLabel($role = null, $lang = null) {
     $sourceRole = $role ?? getUserRole();
     $normalizedRole = normalizeRoleKey($sourceRole);
+    if ($lang) {
+        return t('role.' . $normalizedRole, (string) $sourceRole, $lang);
+    }
     return t('role.' . $normalizedRole, (string) $sourceRole);
 }
 
@@ -65,6 +73,8 @@ function getUserId() {
  * Check if user has a specific role
  */
 function hasRole($role) {
+    // Permitir retrocompatibilidade: funcionario = professor
+    if ($role === 'funcionario') $role = 'professor';
     return isAuthenticated() && getUserRole() === $role;
 }
 
@@ -73,6 +83,8 @@ function hasRole($role) {
  */
 function hasAnyRole(...$roles) {
     $userRole = getUserRole();
+    // Permitir retrocompatibilidade: funcionario = professor
+    $roles = array_map(function($r) { return $r === 'funcionario' ? 'professor' : $r; }, $roles);
     return in_array($userRole, $roles);
 }
 
@@ -91,7 +103,8 @@ function requireAuth() {
  */
 function requireRole($role) {
     requireAuth();
-    if (getUserRole() !== $role) {
+    if ($role === 'funcionario') $role = 'professor';
+    if (getUserRole() !== $role && !hasFullAccess()) {
         http_response_code(403);
         die('Acesso negado');
     }
@@ -102,7 +115,9 @@ function requireRole($role) {
  */
 function requireAnyRole(...$roles) {
     requireAuth();
-    if (!hasAnyRole(...$roles)) {
+    // Permitir retrocompatibilidade: funcionario = professor
+    $roles = array_map(function($r) { return $r === 'funcionario' ? 'professor' : $r; }, $roles);
+    if (!hasAnyRole(...$roles) && !hasFullAccess()) {
         http_response_code(403);
         die('Acesso negado');
     }

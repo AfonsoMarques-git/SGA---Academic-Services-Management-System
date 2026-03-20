@@ -1,8 +1,14 @@
 <nav class="navbar navbar-expand-lg" aria-label="Navegacao principal">
     <div class="container-fluid px-3 px-lg-4">
-        <a class="navbar-brand" href="<?php echo url('dashboard.php'); ?>" aria-label="Voltar ao dashboard">
+        <a class="navbar-brand" href="<?php echo url('dashboard.php'); ?>" aria-label="<?php echo t('nav.back_dashboard'); ?>">
             <span class="fw-bold">SGA</span>
-            <span class="d-none d-sm-inline"> | Sistema de Gestao Academica</span>
+            <span class="d-none d-sm-inline">
+                <?php if (getCurrentLanguage() === 'en'): ?>
+                    | Academic Services Management System
+                <?php else: ?>
+                    | Sistema de Gestão Académica
+                <?php endif; ?>
+            </span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar menu">
             <span class="navbar-toggler-icon"></span>
@@ -33,15 +39,15 @@
                         <?php echo t('nav.theme'); ?>
                     </button>
                 </li>
-                <?php if (hasAnyRole('aluno', 'funcionario')): ?>
+                <?php if (hasRole('aluno') || hasRole('professor')): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo url('messages.php'); ?>"><?php echo t('nav.my_requests'); ?></a>
                     </li>
                 <?php endif; ?>
                 <li class="nav-item">
                     <span class="nav-link" aria-label="<?php echo t('nav.user_logged_in'); ?>">
-                        <?php echo h($_SESSION['full_name']); ?>
-                        <small class="text-warning">(<?php echo h(getRoleLabel()); ?>)</small>
+                            <?php echo h($_SESSION['full_name']); ?>
+                            <small class="text-warning">(<?php echo h(getRoleLabel(getUserRole(), getCurrentLanguage())); ?>)</small>
                     </span>
                 </li>
                 <li class="nav-item">

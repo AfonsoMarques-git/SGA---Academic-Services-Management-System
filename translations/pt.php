@@ -324,7 +324,7 @@ return [
     'auth.setup_subtitle' => 'desenhado para fluxos simples, rápidos e seguros.',
     'auth.test_accounts' => 'Contas de teste',
     'auth.student' => 'Aluno',
-    'auth.staff' => 'Funcionário',
+    'auth.staff' => 'Professor',
     'auth.manager' => 'Gestor Pedagógico',
     'auth.password_for_all' => 'Palavra-passe para todas as contas:',
     'auth.close_alert' => 'Fechar alerta',

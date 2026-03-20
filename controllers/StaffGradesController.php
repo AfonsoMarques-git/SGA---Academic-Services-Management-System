@@ -14,7 +14,7 @@ class StaffGradesController {
      * List grade sheets
      */
     public function index() {
-        requireRole('funcionario');
+        requireRole('professor');
         
         $staffId = getUserId();
         
@@ -49,7 +49,7 @@ class StaffGradesController {
      * View/edit grade sheet
      */
     public function view($id) {
-        requireRole('funcionario');
+        requireRole('professor');
         
         $stmt = $this->pdo->prepare("
             SELECT gs.*, uc.course_name, cu.name as unit_name, ay.label as academic_year_label
@@ -113,7 +113,7 @@ class StaffGradesController {
      * Evaluate submitted student record
      */
     public function evaluateRecord($id) {
-        requireAnyRole('funcionario', 'gestor');
+        requireAnyRole('professor', 'gestor');
 
         $stmt = $this->pdo->prepare(
             "SELECT sr.*, c.name as course_name, u.full_name as student_name, u.email as student_email

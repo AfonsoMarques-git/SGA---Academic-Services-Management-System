@@ -14,7 +14,7 @@ class EnrollmentRequestsController {
      * List pending/recent enrollment requests
      */
     public function index() {
-        requireAnyRole('funcionario', 'gestor');
+        requireRole('gestor');
 
         require_once __DIR__ . '/../models/EnrollmentRequest.php';
         $requestModel = new EnrollmentRequest($this->pdo);
@@ -35,7 +35,7 @@ class EnrollmentRequestsController {
      * Approve an enrollment request
      */
     public function approve($requestId) {
-        requireAnyRole('funcionario', 'gestor');
+        requireRole('gestor');
 
         require_once __DIR__ . '/../models/EnrollmentRequest.php';
         $requestModel = new EnrollmentRequest($this->pdo);
@@ -52,7 +52,7 @@ class EnrollmentRequestsController {
      * Reject an enrollment request
      */
     public function reject($requestId) {
-        requireAnyRole('funcionario', 'gestor');
+        requireRole('gestor');
 
         require_once __DIR__ . '/../models/EnrollmentRequest.php';
         $requestModel = new EnrollmentRequest($this->pdo);

@@ -5,7 +5,7 @@
 
 // Roles (Perfis)
 define('ROLE_ALUNO', 'aluno');
-define('ROLE_FUNCIONARIO', 'funcionario');
+define('ROLE_PROFESSOR', 'professor');
 define('ROLE_GESTOR', 'gestor');
 
 // Student Record States
@@ -44,5 +44,5 @@ define('APP_VERSION', '1.0.0');
 return [
     'app_name' => APP_NAME,
     'app_version' => APP_VERSION,
-    'roles' => [ROLE_ALUNO, ROLE_FUNCIONARIO, ROLE_GESTOR],
+    'roles' => [ROLE_ALUNO, ROLE_PROFESSOR, ROLE_GESTOR],
 ];

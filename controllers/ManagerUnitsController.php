@@ -36,12 +36,16 @@ class ManagerUnitsController {
         // Get available courses
         require_once __DIR__ . '/../models/Curso.php';
         require_once __DIR__ . '/../models/StudyPlan.php';
+        require_once __DIR__ . '/../models/User.php';
         $cursoModel = new Curso($this->pdo);
         $courses = $cursoModel->getAll();
+        $userModel = new User($this->pdo);
+        $professors = $userModel->getByRole('professor');
 
         $selected_course_id = $_POST['course_id'] ?? '';
         $selected_year = $_POST['academic_year_number'] ?? '';
         $selected_semester = $_POST['semester'] ?? '';
+        $selected_professor_id = $_POST['professor_id'] ?? '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $code = $_POST['code'] ?? '';
@@ -49,16 +53,17 @@ class ManagerUnitsController {
             $description = $_POST['description'] ?? '';
             $ects = $_POST['ects'] ?? 0;
             $hours = $_POST['hours'] ?? 0;
+            $professor_id = $_POST['professor_id'] ?? null;
 
-            if (empty($code) || empty($name) || empty($selected_course_id) || empty($selected_year) || empty($selected_semester)) {
+            if (empty($code) || empty($name) || empty($selected_course_id) || empty($selected_year) || empty($selected_semester) || empty($professor_id)) {
                 setFlash('error', 'Todos os campos são obrigatórios');
             } else {
                 try {
                     $stmt = $this->pdo->prepare("
-                        INSERT INTO course_units (code, name, description, ects, hours, is_active, created_at)
-                        VALUES (?, ?, ?, ?, ?, 1, NOW())
+                        INSERT INTO course_units (code, name, description, ects, hours, is_active, created_at, professor_id)
+                        VALUES (?, ?, ?, ?, ?, 1, NOW(), ?)
                     ");
-                    $stmt->execute([$code, $name, $description, $ects, $hours]);
+                    $stmt->execute([$code, $name, $description, $ects, $hours, $professor_id]);
                     $unit_id = $this->pdo->lastInsertId();
 
                     // Associa à tabela study_plans
@@ -71,7 +76,7 @@ class ManagerUnitsController {
                         'is_active' => 1
                     ]);
 
-                    setFlash('success', 'UC criada e associada ao curso/ano/semestre com sucesso');
+                    setFlash('success', 'UC criada e associada ao curso/ano/semestre/professor com sucesso');
                     header('Location: units.php');
                     exit;
                 } catch (Exception $e) {
@@ -85,9 +90,11 @@ class ManagerUnitsController {
             'data' => [
                 'unit' => null,
                 'courses' => $courses,
+                'professors' => $professors,
                 'selected_course_id' => $selected_course_id,
                 'selected_year' => $selected_year,
-                'selected_semester' => $selected_semester
+                'selected_semester' => $selected_semester,
+                'selected_professor_id' => $selected_professor_id
             ]
         ];
     }
@@ -101,13 +108,16 @@ class ManagerUnitsController {
         require_once __DIR__ . '/../models/CourseUnit.php';
         require_once __DIR__ . '/../models/Curso.php';
         require_once __DIR__ . '/../models/StudyPlan.php';
+        require_once __DIR__ . '/../models/User.php';
 
         $unitModel = new CourseUnit($this->pdo);
         $cursoModel = new Curso($this->pdo);
         $studyPlanModel = new StudyPlan($this->pdo);
+        $userModel = new User($this->pdo);
 
         $unit = $unitModel->getById($id);
         $courses = $cursoModel->getAll();
+        $professors = $userModel->getByRole('professor');
 
         // Buscar associação existente (se houver)
         $studyPlan = null;
@@ -120,6 +130,7 @@ class ManagerUnitsController {
         $selected_course_id = $_POST['course_id'] ?? ($studyPlan['course_id'] ?? '');
         $selected_year = $_POST['academic_year_number'] ?? ($studyPlan['academic_year_number'] ?? '');
         $selected_semester = $_POST['semester'] ?? ($studyPlan['semester'] ?? '');
+        $selected_professor_id = $_POST['professor_id'] ?? ($unit['professor_id'] ?? '');
 
         if (!$unit) {
             http_response_code(404);
@@ -132,16 +143,17 @@ class ManagerUnitsController {
             $description = $_POST['description'] ?? '';
             $ects = $_POST['ects'] ?? 0;
             $hours = $_POST['hours'] ?? 0;
+            $professor_id = $_POST['professor_id'] ?? null;
 
-            if (empty($code) || empty($name) || empty($selected_course_id) || empty($selected_year) || empty($selected_semester)) {
+            if (empty($code) || empty($name) || empty($selected_course_id) || empty($selected_year) || empty($selected_semester) || empty($professor_id)) {
                 setFlash('error', 'Todos os campos são obrigatórios');
             } else {
                 try {
                     $stmt = $this->pdo->prepare("
-                        UPDATE course_units SET code = ?, name = ?, description = ?, ects = ?, hours = ?, updated_at = NOW()
+                        UPDATE course_units SET code = ?, name = ?, description = ?, ects = ?, hours = ?, professor_id = ?, updated_at = NOW()
                         WHERE id = ?
                     ");
-                    $stmt->execute([$code, $name, $description, $ects, $hours, $id]);
+                    $stmt->execute([$code, $name, $description, $ects, $hours, $professor_id, $id]);
 
                     // Atualiza ou cria associação na study_plans
                     if ($studyPlan) {
@@ -171,9 +183,11 @@ class ManagerUnitsController {
             'data' => [
                 'unit' => $unit,
                 'courses' => $courses,
+                'professors' => $professors,
                 'selected_course_id' => $selected_course_id,
                 'selected_year' => $selected_year,
-                'selected_semester' => $selected_semester
+                'selected_semester' => $selected_semester,
+                'selected_professor_id' => $selected_professor_id
             ]
         ];
     }

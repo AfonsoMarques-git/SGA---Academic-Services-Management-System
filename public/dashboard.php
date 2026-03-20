@@ -29,13 +29,13 @@ if ($role === 'aluno') {
     
     include __DIR__ . '/../views/student/dashboard.php';
     
-} elseif ($role === 'funcionario') {
-    // Staff Dashboard
+} elseif ($role === 'funcionario' || $role === 'professor') {
+    // Staff/Professor Dashboard
     $cursos = $cursoModel->getAll();
     $alunos = $alunoModel->getAll();
     
     include __DIR__ . '/../views/staff/dashboard.php';
-    
+
 } elseif ($role === 'gestor') {
     // Manager Dashboard
     $cursos = $cursoModel->getAll();
