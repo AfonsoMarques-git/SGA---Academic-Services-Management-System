@@ -14,7 +14,7 @@ class Aluno {
      */
     public function getByUserId($userId) {
         $stmt = $this->pdo->prepare("
-            SELECT sr.*, c.name as course_name, u.full_name
+            SELECT sr.*, c.name as course_name, u.full_name AS user_full_name
             FROM student_records sr
             LEFT JOIN courses c ON sr.course_id = c.id
             LEFT JOIN users u ON sr.user_id = u.id
@@ -31,7 +31,7 @@ class Aluno {
      */
     public function getAll() {
         $stmt = $this->pdo->query("
-            SELECT sr.*, c.name as course_name, u.full_name, u.email, u.username
+            SELECT sr.*, c.name as course_name, u.full_name AS user_full_name, u.email, u.username
             FROM student_records sr
             LEFT JOIN courses c ON sr.course_id = c.id
             LEFT JOIN users u ON sr.user_id = u.id
@@ -45,7 +45,7 @@ class Aluno {
      */
     public function getByCourse($courseId) {
         $stmt = $this->pdo->prepare("
-            SELECT sr.*, c.name as course_name, u.full_name
+            SELECT sr.*, c.name as course_name, u.full_name AS user_full_name
             FROM student_records sr
             LEFT JOIN courses c ON sr.course_id = c.id
             LEFT JOIN users u ON sr.user_id = u.id

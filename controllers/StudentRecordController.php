@@ -42,16 +42,33 @@ class StudentRecordController {
                 'postal_code' => $_POST['postal_code'] ?? '',
                 'course_id' => $_POST['course_id'] ?? '',
             ];
+
+            // Normalize optional form fields to NULL for database compatibility.
+            foreach (['birth_date', 'national_id', 'tax_number', 'phone', 'email_contact', 'address', 'city', 'postal_code'] as $optionalField) {
+                if (($data[$optionalField] ?? '') === '') {
+                    $data[$optionalField] = null;
+                }
+            }
+
+            if (($data['course_id'] ?? '') === '') {
+                setFlash('error', 'Selecione um curso antes de guardar a ficha.');
+                header('Location: ' . url('student/record.php'));
+                exit;
+            }
             
-            if (!$record) {
-                // Create new record
-                $data['user_id'] = $userId;
-                $alunoModel->create($data);
-                setFlash('success', 'Ficha criada com sucesso');
-            } else {
-                // Update existing record
-                $alunoModel->update($record['id'], $data);
-                setFlash('success', 'Ficha atualizada com sucesso');
+            try {
+                if (!$record) {
+                    // Create new record
+                    $data['user_id'] = $userId;
+                    $saved = $alunoModel->create($data);
+                    setFlash($saved ? 'success' : 'error', $saved ? 'Ficha criada com sucesso' : 'Não foi possível criar a ficha.');
+                } else {
+                    // Update existing record
+                    $saved = $alunoModel->update($record['id'], $data);
+                    setFlash($saved ? 'success' : 'error', $saved ? 'Ficha atualizada com sucesso' : 'Não foi possível atualizar a ficha.');
+                }
+            } catch (Throwable $e) {
+                setFlash('error', 'Ocorreu um erro ao guardar a ficha.');
             }
             
             header('Location: ' . url('student/record.php'));
